@@ -1,88 +1,51 @@
-#include "dokter.h"
+#include "tree.h"
 
-void createListDokter(ListDokter &L) {
-    L.first = nullptr;
+void createTree(adrNode &root) {
+    root = NULL;
 }
 
-adrDokter newElmDokter(string id, string nama, string spesialis) {
-    adrDokter D = new Dokter;
-    D->idDokter = id;
-    D->nama = nama;
-    D->spesialis = spesialis;
-    D->next = nullptr;
-    D->firstPasien = nullptr;
-    return D;
+adrNode createNode(infotype x) {
+    adrNode p = new Node;
+    p->info = x;
+    p->left = NULL;
+    p->right = NULL;
+    return p;
 }
 
-void insertDokter(ListDokter &L, adrDokter D) {
-    if (L.first == nullptr) {
-        L.first = D;
+void insertNode(adrNode &root, adrNode p) {
+    if (root == NULL) {
+        root = p;
     } else {
-        adrDokter temp = L.first;
-        while (temp->next != nullptr) {
-            temp = temp->next;
-        }
-        temp->next = D;
-    }
-}
-
-void deleteDokter(ListDokter &L, string id) {
-    if (L.first == nullptr) {
-        return;
-    }
-
-    adrDokter P = L.first;
-    adrDokter prec = nullptr;
-    bool ketemu = false;
-
-    while (P != nullptr && !ketemu) {
-        if (P->idDokter == id) {
-            ketemu = true;
+        if (p->info < root->info) {
+            insertNode(root->left, p);
         } else {
-            prec = P;
-            P = P->next;
+            insertNode(root->right, p);
         }
-    }
-
-    if (ketemu) {
-        if (prec == nullptr) { 
-            L.first = P->next;
-        } else { 
-            prec->next = P->next;
-        }
-        
-        P->next = nullptr;
-        delete P;
     }
 }
 
-adrDokter searchDokter(ListDokter L, string id) {
-    adrDokter P = L.first;
-    while (P != nullptr) {
-        if (P->idDokter == id) {
-            return P;
-        }
-        P = P->next;
-    }
-    return nullptr;
-}
-
-void showSemuaDokter(ListDokter L) {
-    if (L.first == nullptr) {
-        cout << "--- DATA KOSONG ---" << endl;
-    } else {
-        adrDokter P = L.first;
-        int i = 1;
-        cout << "\n=== DATA DOKTER ===" << endl;
-        while (P != nullptr) {
-            cout << i << ". [" << P->idDokter << "] " << P->nama 
-                 << " (" << P->spesialis << ")" << endl;
-            
-            P = P->next;
-            i++;
-        }
-        cout << "===================" << endl;
+void displayTree(adrNode root) {
+    if (root != NULL) {
+        displayTree(root->left);
+        cout << root->info << " ";
+        displayTree(root->right);
     }
 }
 
+adrNode getMinNode(adrNode root) {
+    adrNode p = root;
+    // Loop sampai tidak bisa ke kiri lagi (nilai terkecil di BST selalu di paling kiri)
+    while (p != NULL && p->left != NULL) {
+        p = p->left;
+    }
+    return p;
+}
 
+adrNode getMaxNode(adrNode root) {
+    adrNode p = root;
+    // Loop sampai tidak bisa ke kanan lagi (nilai terbesar di BST selalu di paling kanan)
+    while (p != NULL && p->right != NULL) {
+        p = p->right;
+    }
+    return p;
+}
