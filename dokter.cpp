@@ -1,51 +1,87 @@
-#include "tree.h"
+#include "dokter.h"
 
-void createTree(adrNode &root) {
-    root = NULL;
+void createListDokter(ListDokter &L) {
+    L.first = nullptr;
 }
 
-adrNode createNode(infotype x) {
-    adrNode p = new Node;
-    p->info = x;
-    p->left = NULL;
-    p->right = NULL;
-    return p;
+adrDokter newElmDokter(string id, string nama, string spesialis) {
+    adrDokter P = new Dokter;
+    P->idDokter = id;
+    P->nama = nama;
+    P->spesialis = spesialis;
+    P->next = nullptr;
+    P->firstPasien = nullptr;
+    return P;
 }
 
-void insertNode(adrNode &root, adrNode p) {
-    if (root == NULL) {
-        root = p;
+void insertDokter(ListDokter &L, adrDokter P) {
+    if (L.first == nullptr) {
+        L.first = P;
     } else {
-        if (p->info < root->info) {
-            insertNode(root->left, p);
+        adrDokter Q = L.first;
+        while (Q->next != nullptr) {
+            Q = Q->next;
+        }
+        Q->next = P;
+    }
+}
+
+void deleteDokter(ListDokter &L, string x) {
+    if (L.first == nullptr) {
+        cout << "List kosong" << endl;
+        return;
+    }
+
+    adrDokter P = L.first;
+    adrDokter prec = nullptr;
+    bool ketemu = false;
+
+    while (P != nullptr && !ketemu) {
+        if (P->idDokter == x) {
+            ketemu = true;
         } else {
-            insertNode(root->right, p);
+            prec = P;
+            P = P->next;
         }
     }
-}
 
-void displayTree(adrNode root) {
-    if (root != NULL) {
-        displayTree(root->left);
-        cout << root->info << " ";
-        displayTree(root->right);
+    if (ketemu) {
+        if (prec == nullptr) { 
+            L.first = P->next;
+        } else { 
+            prec->next = P->next;
+        }
+        P->next = nullptr;
+        delete P;
+    } else {
+        cout << "Data dokter tidak ditemukan" << endl;
     }
 }
 
-adrNode getMinNode(adrNode root) {
-    adrNode p = root;
-    // Loop sampai tidak bisa ke kiri lagi (nilai terkecil di BST selalu di paling kiri)
-    while (p != NULL && p->left != NULL) {
-        p = p->left;
+adrDokter searchDokter(ListDokter L, string x) {
+    adrDokter P = L.first;
+    while (P != nullptr) {
+        if (P->idDokter == x) {
+            return P;
+        }
+        P = P->next;
     }
-    return p;
+    return nullptr;
 }
 
-adrNode getMaxNode(adrNode root) {
-    adrNode p = root;
-    // Loop sampai tidak bisa ke kanan lagi (nilai terbesar di BST selalu di paling kanan)
-    while (p != NULL && p->right != NULL) {
-        p = p->right;
+void showSemuaDokter(ListDokter L) {
+    if (L.first == nullptr) {
+        cout << "List Dokter kosong" << endl;
+    } else {
+        adrDokter P = L.first;
+        int i = 1;
+        cout << "=== DATA DOKTER ===" << endl;
+        while (P != nullptr) {
+            cout << i << ". " << P->idDokter << " - " << P->nama 
+                 << " (" << P->spesialis << ")" << endl;
+            P = P->next;
+            i++;
+        }
+        cout << endl;
     }
-    return p;
 }
