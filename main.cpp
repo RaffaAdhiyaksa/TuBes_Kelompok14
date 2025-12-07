@@ -1,11 +1,9 @@
-#include "dokter.h"
-#include "pasien.h" // Wajib di-include agar fungsi pasien bisa dipakai
+#include "rumah_sakit.h"
 #include <iostream>
 
 using namespace std;
 
 int main() {
-    // Buat List Utama (List Dokter)
     ListDokter L;
     createListDokter(L);
 
@@ -28,7 +26,6 @@ int main() {
         cin >> pilihan;
 
         if (pilihan == 1) {
-            // Panggil fungsi dari dokter.cpp
             tambahDokter(L);
 
         } else if (pilihan == 2) {
@@ -47,12 +44,10 @@ int main() {
             deleteDokter(L, id);
 
         } else if (pilihan == 5) {
-            // === LOGIKA TAMBAH PASIEN (CHILD) ===
             string idDokter;
             cout << "Masukkan ID Dokter tujuan: ";
             cin >> idDokter;
 
-            // Cari dulu dokternya ada atau tidak
             adrDokter D = cariDokter(L, idDokter);
             if (D != nullptr) {
                 cout << "-- Data Pasien --" << endl;
@@ -65,18 +60,14 @@ int main() {
                 cout << "Alamat      : "; cin >> alamatPas;
                 cout << "Keluhan     : "; cin >> keluhan;
 
-                // 1. Buat elemen pasien baru
+
                 adrPasien P = newElmPasien(idPas, namaPas, umur, alamatPas, keluhan);
 
-                // 2. BUNGKUS pointer firstPasien milik dokter ke dalam ListPasien sementara
-                //    Ini trik agar kita bisa pakai fungsi insertPasienLast dari pasien.cpp
                 ListPasien LP;
                 LP.first = D->firstPasien;
 
-                // 3. Masukkan pasien
                 insertPasienLast(LP, P);
 
-                // 4. Update kembali pointer milik dokter
                 D->firstPasien = LP.first;
 
                 cout << "Pasien berhasil ditambahkan ke Dokter " << D->nama << endl;
@@ -85,7 +76,6 @@ int main() {
             }
 
         } else if (pilihan == 6) {
-            // === LOGIKA TAMPILKAN PASIEN (CHILD) ===
             string idDokter;
             cout << "Lihat pasien dari Dokter (ID): ";
             cin >> idDokter;
@@ -93,24 +83,15 @@ int main() {
             adrDokter D = cariDokter(L, idDokter);
             if (D != nullptr) {
                 cout << "\nPasien yang ditangani dr. " << D->nama << ":" << endl;
-
-                // Bungkus lagi ke ListPasien sementara
                 ListPasien LP;
                 LP.first = D->firstPasien;
 
-                // Panggil fungsi show dari pasien.cpp
                 showSemuaPasien(LP);
             } else {
                 cout << "Dokter tidak ditemukan!" << endl;
             }
 
         } else if (pilihan == 7) {
-            // === LOGIKA HAPUS PASIEN (CHILD) ===
-            // Karena fungsi delete di pasien.cpp butuh pointer presisi,
-            // di sini kita pakai cara sederhana hapus Last atau First saja sebagai contoh,
-            // atau modifikasi sedikit jika ingin hapus by ID.
-            // Untuk kesederhanaan sesuai request, kita pakai deletePasienLast (hapus antrian terakhir).
-
             string idDokter;
             cout << "Hapus pasien terakhir dari Dokter (ID): ";
             cin >> idDokter;
@@ -124,9 +105,9 @@ int main() {
                     LP.first = D->firstPasien;
 
                     adrPasien P;
-                    deletePasienLast(LP, P); // Hapus pasien paling belakang
+                    deletePasienLast(LP, P); 
 
-                    D->firstPasien = LP.first; // Update pointer dokter
+                    D->firstPasien = LP.first;
                     cout << "Data pasien antrian terakhir berhasil dihapus." << endl;
                 }
             } else {
