@@ -1,4 +1,4 @@
-#include "Pasien.h"
+#include "rumah_sakit.h"
 
 void createListPasien(ListPasien &L) {
     L.first = nullptr;
