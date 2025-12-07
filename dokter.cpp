@@ -1,4 +1,4 @@
-#include "dokter.h"
+#include "rumah_sakit.h"
 #include <iostream>
 
 using namespace std;
@@ -28,10 +28,10 @@ void tambahDokter(ListDokter &L) {
     cin >> newDokter->idDokter;
     cout << "Masukkan Spesialis: ";
     cin >> newDokter->spesialis;
-    
+
     newDokter->next = nullptr;
     newDokter->firstPasien = nullptr;
-    
+
     insertDokter(L, newDokter);
 }
 
@@ -92,12 +92,12 @@ void deleteDokter(ListDokter &L, string id) {
     }
 
     if (ketemu) {
-        if (prec == nullptr) { 
+        if (prec == nullptr) {
             L.first = P->next;
-        } else { 
+        } else {
             prec->next = P->next;
         }
-        
+
         P->next = nullptr;
         delete P;
         L.count--;
