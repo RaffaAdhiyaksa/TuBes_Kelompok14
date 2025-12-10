@@ -1,4 +1,4 @@
-#include "rumah_sakit.h"
+#include "rumahSakit.h"
 #include <iostream>
 
 using namespace std;
@@ -133,22 +133,15 @@ void cariDokterByID(ListDokter L, string id) {
     cout << "Dokter dengan ID " << id << " tidak ditemukan!" << endl;
 }
 
-void cariDokterByNama(ListDokter L, string &nama) {
+adrDokter cariDokterByNama(ListDokter L, string nama) {
     adrDokter P = L.first;
-    bool found = false;
     while (P != nullptr) {
         if (P->nama == nama) {
-            cout << "Dokter ditemukan!" << endl;
-            cout << "Nama: " << P->nama << endl;
-            cout << "ID: " << P->idDokter << endl;
-            cout << "Spesialis: " << P->spesialis << endl;
-            found = true;
+            return P;       // ← BALIKAN POINTER DOKTER
         }
         P = P->next;
     }
-    if (!found) {
-        cout << "Dokter dengan nama " << nama << " tidak ditemukan!" << endl;
-    }
+    return nullptr;         // ← kalau tidak ditemukan
 }
 
 void showSemuaDokter(ListDokter L) {
