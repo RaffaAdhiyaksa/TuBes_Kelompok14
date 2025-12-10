@@ -1,4 +1,12 @@
 # depslib dependency file v1.0
-1764522534 source:c:\users\user\tubes_kelompok14\main.cpp
+1765338802 source:c:\users\user\tubes_kelompok14\main.cpp
+	"rumah_sakit.h"
 	<iostream>
+
+1765338758 c:\users\user\tubes_kelompok14\rumah_sakit.h
+	<iostream>
+	<string>
+
+1765340040 source:c:\users\user\tubes_kelompok14\pasien.cpp
+	"rumah_sakit.h"
 
