@@ -1,6 +1,5 @@
-#ifndef RUMAH_SAKIT_H
-#define RUMAH_SAKIT_H
-
+#ifndef RUMAHSAKIT_H_INCLUDED
+#define RUMAHSAKIT_H_INCLUDED
 #include <iostream>
 #include <string>
 
@@ -45,24 +44,27 @@ struct ListDokter {
 };
 
 // --- PRIMITIF PASIEN ---
-void createListPasien(ListPasien &L);
+void createListPasien(ListPasien &LP);
 adrPasien newElmPasien(string id, string nama, int umur, string alamat, string keluhan);
 
-void insertPasienFirst(ListPasien &L, adrPasien P);
-void insertPasienLast(ListPasien &L, adrPasien P);
+void insertPasienFirst(ListPasien &LP, adrPasien P);
+void insertPasienLast(ListPasien &LP, adrPasien P);
 void insertPasienAfter(adrPasien Prec, adrPasien P);
 
-void deletePasienFirst(ListPasien &L, adrPasien &P);
-void deletePasienLast(ListPasien &L, adrPasien &P);
+void deletePasienFirst(ListPasien &LP, adrPasien &P);
+void deletePasienLast(ListPasien &LP, adrPasien &P);
 void deletePasienAfter(adrPasien Prec, adrPasien &P);
 
-adrPasien searchPasienByID(ListPasien L, string id);
-adrPasien searchPasienByNama(ListPasien L, string nama);
-adrPasien searchPasienByUmur(ListPasien L, int umur);
-adrPasien searchPasienByAlamat(ListPasien L, string alamat);
-adrPasien searchPasienByKeluhan(ListPasien L, string keluhan);
+adrPasien searchPasienByID(ListPasien LP, string id);
+adrPasien searchPasienByNama(ListPasien LP, string nama);
+adrPasien searchPasienByUmur(ListPasien LP, int umur);
+adrPasien searchPasienByAlamat(ListPasien LP, string alamat);
+adrPasien searchPasienByKeluhan(ListPasien LP, string keluhan);
 
-void showSemuaPasien(ListPasien L);
+void showSemuaPasien(ListPasien LP);
+void tambahPasienKeDokter(adrDokter D, adrPasien P);
+void showPasienDokter(adrDokter D);
+
 
 // --- PRIMITIF DOKTER ---
 void createListDokter(ListDokter &L);
@@ -76,7 +78,7 @@ adrDokter cariDokter(ListDokter L, string id);
 void editDokter(ListDokter L, string id);
 adrDokter searchDokter(ListDokter L, string id);
 void cariDokterByID(ListDokter L, string id);
-void cariDokterByNama(ListDokter L, string &nama);
+adrDokter cariDokterByNama(ListDokter L, string nama);
 void showSemuaDokter(ListDokter L);
 
 #endif
