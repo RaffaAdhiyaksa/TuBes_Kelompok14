@@ -10,3 +10,7 @@
 1765340040 source:c:\users\user\tubes_kelompok14\pasien.cpp
 	"rumah_sakit.h"
 
+1765340066 source:c:\users\user\tubes_kelompok14\dokter.cpp
+	"rumah_sakit.h"
+	<iostream>
+
