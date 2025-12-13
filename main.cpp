@@ -393,11 +393,10 @@ int main() {
                     cout << "Alamat      : "; cin >> AlamatPas;
                     cout << "Keluhan     : "; cin >> KeluhanPas;
 
-                    adrPasien P = newElmPasien(idPas, namaPas, umurPas, KeluhanPas, AlamatPas);
-                    LP.first = D->firstPasien;
+                    adrPasien P = newElmPasien(idPas, namaPas, umurPas, AlamatPas, KeluhanPas);
                     insertPasienLast(LP, P);
 
-                    D->firstPasien = LP.first;
+                    tambahPasienKeDokter(D, P);
 
                     cout << "Anda Berhasil Mendaftar Jadi Pasien Dokter " << D->nama << endl;
 
