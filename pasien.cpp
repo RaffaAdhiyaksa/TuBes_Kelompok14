@@ -210,4 +210,48 @@ void showPasienDokter(adrDokter D) {
         P = P->next;
     }
 }
+void menuUtama(int &pilihan) {
+    cout << "\n============ MENU RUMAH SAKIT ============\n";
+    cout << "1. Admin\n";
+    cout << "2. Dokter\n";
+    cout << "3. Pasien\n";
+    cout << "0. Keluar\n";
+    cout << "Pilih: ";
+    cin >> pilihan;
+}
+void menuAdmin(int &pilihan) {
+    cout << "\n============= MENU ADMIN =============\n";
+    cout << "1. Tambah Dokter\n";
+    cout << "2. Tambah Pasien\n";
+    cout << "3. Hapus Pasien\n";
+    cout << "4. Hapus Dokter\n";
+    cout << "5. Cari Dokter\n";
+    cout << "6. Cari Pasien\n";
+    cout << "7. Show Semua Dokter\n";
+    cout << "8. Show Semua Pasien\n";
+    cout << "9. Tambah Pasien ke Dokter\n";
+    cout << "0. Kembali\n";
+    cout << "Pilih: ";
+    cin >> pilihan;
+}
+void menuDokter(int &pilihan) {
+    cout << "\n============= MENU DOKTER =============\n";
+    cout << "1. Show Pasien Dokter\n";
+    cout << "2. Show Semua Dokter\n";
+    cout << "3. Cari Dokter\n";
+    cout << "4. Hapus Dokter\n";
+    cout << "5. Hapus Pasien Dari dokter\n";
+    cout << "6. Menambahkan Pasien ke Dokter\n";
+    cout << "0. Kembali\n";
+    cout << "Pilih: ";
+    cin >> pilihan;
+}
+void menuPasien(int &pilihan) {
+    cout << "\n============= MENU PASIEN =============\n";
+    cout << "1. Daftar Pasien\n";
+    cout << "2. Show Dokter\n";
+    cout << "0. Kembali\n";
+    cout << "Pilih: ";
+    cin >> pilihan;
+}
 

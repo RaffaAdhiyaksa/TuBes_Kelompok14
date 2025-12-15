@@ -65,6 +65,12 @@ void showSemuaPasien(ListPasien LP);
 void tambahPasienKeDokter(adrDokter D, adrPasien P);
 void showPasienDokter(adrDokter D);
 
+// --- MENU ---
+void menuUtama(int &pilihan);
+void menuAdmin(int &pilihan);
+void menuDokter(int &pilihan);
+void menuPasien(int &pilihan);
+
 
 // --- PRIMITIF DOKTER ---
 void createListDokter(ListDokter &L);
