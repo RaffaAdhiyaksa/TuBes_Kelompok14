@@ -4,13 +4,14 @@ void createListPasien(ListPasien &LP) {
     LP.first = nullptr;
 }
 
-adrPasien newElmPasien(string id, string nama, int umur, string alamat, string keluhan) {
+adrPasien newElmPasien(string id, string nama, int umur, string alamat, string keluhan, string dokterFavorit) {
     adrPasien P = new Pasien;
     P->idPasien = id;
     P->nama = nama;
     P->umur = umur;
     P->alamat = alamat;
     P->keluhan = keluhan;
+    P->dokterFavorit = dokterFavorit;
     P->next = nullptr;
     return P;
 }
@@ -23,6 +24,7 @@ void insertPasienFirst(ListPasien &LP, adrPasien P) {
         LP.first = P;
     }
 }
+
 void insertPasienLast(ListPasien &LP, adrPasien P) {
     adrPasien Q = LP.first;
     if (LP.first == nullptr) {
@@ -34,12 +36,14 @@ void insertPasienLast(ListPasien &LP, adrPasien P) {
         Q->next = P;
     }
 }
+
 void insertPasienAfter(adrPasien Prec, adrPasien P) {
     if (Prec != nullptr) {
         P->next = Prec->next;
         Prec->next = P;
     }
 }
+
 void deletePasienFirst(ListPasien &LP, adrPasien &P) {
     if (LP.first == nullptr) {
         P = nullptr;
@@ -49,6 +53,7 @@ void deletePasienFirst(ListPasien &LP, adrPasien &P) {
         P->next = nullptr;
     }
 }
+
 void deletePasienLast(ListPasien &LP, adrPasien &P) {
     if (LP.first == nullptr) {
         P = nullptr;
@@ -64,6 +69,7 @@ void deletePasienLast(ListPasien &LP, adrPasien &P) {
         Q->next = nullptr;
     }
 }
+
 void deletePasienAfter(adrPasien Prec, adrPasien &P) {
     if (Prec != nullptr && Prec->next != nullptr) {
         P = Prec->next;
@@ -71,6 +77,7 @@ void deletePasienAfter(adrPasien Prec, adrPasien &P) {
         P->next = nullptr;
     }
 }
+
 adrPasien searchPasienByID(ListPasien LP, string id) {
     adrPasien P = LP.first;
     while (P != nullptr) {
@@ -81,13 +88,13 @@ adrPasien searchPasienByID(ListPasien LP, string id) {
             cout << "Umur: " << P->umur << endl;
             cout << "Alamat: " << P->alamat << endl;
             cout << "Keluhan: " << P->keluhan << endl;
-
             return P;
         }
         P = P->next;
     }
     return nullptr;
 }
+
 adrPasien searchPasienByNama(ListPasien LP, string nama) {
     adrPasien P = LP.first;
     while (P != nullptr) {
@@ -104,6 +111,7 @@ adrPasien searchPasienByNama(ListPasien LP, string nama) {
     }
     return nullptr;
 }
+
 adrPasien searchPasienByUmur(ListPasien LP, int umur) {
     adrPasien P = LP.first;
     while (P != nullptr) {
@@ -114,13 +122,13 @@ adrPasien searchPasienByUmur(ListPasien LP, int umur) {
             cout << "Umur: " << P->umur << endl;
             cout << "Alamat: " << P->alamat << endl;
             cout << "Keluhan: " << P->keluhan << endl;
-
            return P;
         }
         P = P->next;
     }
     return nullptr;
 }
+
 adrPasien searchPasienByAlamat(ListPasien LP, string alamat) {
     adrPasien P = LP.first;
     while (P != nullptr) {
@@ -137,6 +145,7 @@ adrPasien searchPasienByAlamat(ListPasien LP, string alamat) {
     }
     return nullptr;
 }
+
 adrPasien searchPasienByKeluhan(ListPasien LP, string keluhan) {
     adrPasien P = LP.first;
     while (P != nullptr) {
@@ -153,6 +162,7 @@ adrPasien searchPasienByKeluhan(ListPasien LP, string keluhan) {
     }
     return nullptr;
 }
+
 void showSemuaPasien(ListPasien LP) {
     adrPasien P = LP.first;
     if (P == nullptr) {
@@ -162,54 +172,105 @@ void showSemuaPasien(ListPasien LP) {
         cout << "=======Daftar Pasien=======";
         cout << endl;
         while (P != nullptr) {
-            cout << "ID       : " << P->idPasien << endl;
-            cout << "Nama     : " << P->nama << endl;
-            cout << "Umur     : " << P->umur << endl;
-            cout << "Alamat   : " << P->alamat << endl;
-            cout << "Keluhan  : " << P->keluhan << endl;
+            cout << "ID             : " << P->idPasien << endl;
+            cout << "Nama           : " << P->nama << endl;
+            cout << "Umur           : " << P->umur << endl;
+            cout << "Alamat         : " << P->alamat << endl;
+            cout << "Keluhan        : " << P->keluhan << endl;
+            cout << "Dokter Favorit : " << P->dokterFavorit << endl;
             cout << "==========================" << endl;
 
             P = P->next;
         }
     }
 }
+
+// PERBAIKAN LOGIKA: Membuat salinan (copy) agar List Utama tidak putus
 void tambahPasienKeDokter(adrDokter D, adrPasien P) {
     if (D == nullptr || P == nullptr) return;
 
-    // Insert P ke akhir list pasien dokter D
+    // Kita buat Node BARU yang datanya sama dengan P.
+    // Ini penting supaya pointer 'next' di List Utama (LP) tidak terganggu.
+    adrPasien P_Baru = newElmPasien(P->idPasien, P->nama, P->umur, P->alamat, P->keluhan, P->dokterFavorit);
+
+    // Insert P_Baru ke akhir list pasien milik DOKTER
     if (D->firstPasien == nullptr) {
-        D->firstPasien = P;
-        P->next = nullptr;
+        D->firstPasien = P_Baru;
     } else {
         adrPasien Q = D->firstPasien;
         while (Q->next != nullptr) {
             Q = Q->next;
         }
-        Q->next = P;
-        P->next = nullptr;
+        Q->next = P_Baru;
     }
 }
+
+// PERBAIKAN SYNTAX: Menggunakan D->firstPasien, bukan LP.first
 void showPasienDokter(adrDokter D) {
-    if (D == nullptr) return;
+    if (D == nullptr) return; // Cek safety
 
     cout << "\n===== Daftar Pasien Dokter " << D->nama << " =====\n";
 
+    // AMBIL DARI LIST DOKTER, BUKAN LP
     adrPasien P = D->firstPasien;
+
     if (P == nullptr) {
         cout << "Tidak ada pasien.\n";
+    } else {
+        while (P != nullptr) {
+            cout << "ID             : " << P->idPasien << endl;
+            cout << "Nama           : " << P->nama << endl;
+            cout << "Umur           : " << P->umur << endl;
+            cout << "Alamat         : " << P->alamat << endl;
+            cout << "Keluhan        : " << P->keluhan << endl;
+            cout << "Dokter Favorit : " << P->dokterFavorit << endl;
+            cout << "----------------------------------\n";
+
+            P = P->next;
+        }
+    }
+}
+
+// --- FUNGSI BARU: MENGHITUNG DOKTER FAVORIT SECARA OTOMATIS ---
+void hitungDokterFavorit(ListPasien LP) {
+    if (LP.first == nullptr) {
+        cout << "Belum ada data pasien untuk dianalisis." << endl;
         return;
     }
 
+    string namaTerfavorit = "-";
+    int jumlahTerbanyak = 0;
+
+    // Loop Utama: Cek setiap pasien di dalam list
+    adrPasien P = LP.first;
     while (P != nullptr) {
-        cout << "ID      : " << P->idPasien << endl;
-        cout << "Nama    : " << P->nama << endl;
-        cout << "Umur    : " << P->umur << endl;
-        cout << "Alamat  : " << P->alamat << endl;
-        cout << "Keluhan : " << P->keluhan << endl;
-        cout << "----------------------------------\n";
+        string dokterSaatIni = P->dokterFavorit;
+        int hitung = 0;
+
+        // Loop Dalam: Hitung berapa kali 'dokterSaatIni' muncul di seluruh list
+        adrPasien Q = LP.first;
+        while (Q != nullptr) {
+            if (Q->dokterFavorit == dokterSaatIni) {
+                hitung++;
+            }
+            Q = Q->next;
+        }
+
+        // Cek apakah ini rekor baru?
+        if (hitung > jumlahTerbanyak) {
+            jumlahTerbanyak = hitung;
+            namaTerfavorit = dokterSaatIni;
+        }
+
         P = P->next;
     }
+
+    cout << "\n=== STATISTIK DOKTER FAVORIT ===" << endl;
+    cout << "Dokter Paling Diminati : " << namaTerfavorit << endl;
+    cout << "Jumlah Pemilih         : " << jumlahTerbanyak << " Pasien" << endl;
+    cout << "================================" << endl;
 }
+
 void menuUtama(int &pilihan) {
     cout << "\n============ MENU RUMAH SAKIT ============\n";
     cout << "1. Admin\n";
@@ -230,6 +291,7 @@ void menuAdmin(int &pilihan) {
     cout << "7. Show Semua Dokter\n";
     cout << "8. Show Semua Pasien\n";
     cout << "9. Tambah Pasien ke Dokter\n";
+    cout << "10. LIHAT DOKTER PALING FAVORIT\n"; // Menu Baru
     cout << "0. Kembali\n";
     cout << "Pilih: ";
     cin >> pilihan;
@@ -254,4 +316,3 @@ void menuPasien(int &pilihan) {
     cout << "Pilih: ";
     cin >> pilihan;
 }
-
