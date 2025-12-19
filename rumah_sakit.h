@@ -5,21 +5,19 @@
 
 using namespace std;
 
-// Forward Declaration
 struct Pasien;
 struct Dokter;
 
-// Typedef
 typedef Pasien* adrPasien;
 typedef Dokter* adrDokter;
 
-// --- STRUKTUR DATA PASIEN ---
 struct Pasien {
     string idPasien;
     string nama;
     int umur;
     string alamat;
     string keluhan;
+    string dokterFavorit; 
     adrPasien next;
 };
 
@@ -27,7 +25,6 @@ struct ListPasien {
     adrPasien first;
 };
 
-// --- STRUKTUR DATA DOKTER ---
 struct Dokter {
     string idDokter;
     string nama;
@@ -45,7 +42,9 @@ struct ListDokter {
 
 // --- PRIMITIF PASIEN ---
 void createListPasien(ListPasien &LP);
-adrPasien newElmPasien(string id, string nama, int umur, string alamat, string keluhan);
+
+// Update parameter newElmPasien dengan dokterFavorit
+adrPasien newElmPasien(string id, string nama, int umur, string alamat, string keluhan, string dokterFavorit);
 
 void insertPasienFirst(ListPasien &LP, adrPasien P);
 void insertPasienLast(ListPasien &LP, adrPasien P);
@@ -65,12 +64,14 @@ void showSemuaPasien(ListPasien LP);
 void tambahPasienKeDokter(adrDokter D, adrPasien P);
 void showPasienDokter(adrDokter D);
 
+// --- FITUR TAMBAHAN (BARU) ---
+void hitungDokterFavorit(ListPasien LP);
+
 // --- MENU ---
 void menuUtama(int &pilihan);
 void menuAdmin(int &pilihan);
 void menuDokter(int &pilihan);
 void menuPasien(int &pilihan);
-
 
 // --- PRIMITIF DOKTER ---
 void createListDokter(ListDokter &L);
